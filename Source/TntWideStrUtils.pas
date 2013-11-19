@@ -45,19 +45,21 @@ function WStrPLCopy(Dest: PWideChar; const Source: WideString; MaxLen: Cardinal)
 {$IFNDEF COMPILER_10_UP}
 function WStrScan(const Str: PWideChar; Chr: WideChar): PWideChar;
 // WStrComp and WStrPos were introduced as broken in Delphi 2006, but fixed in Delphi 2006 Update 2
-function WStrComp(Str1, Str2: PWideChar): Integer;
+{$IFDEF MSWINDOWS}function WStrComp(Str1, Str2: PWideChar): Integer;{$ENDIF}
 function WStrPos(Str, SubStr: PWideChar): PWideChar;
 {$ENDIF}
-function Tnt_WStrComp(Str1, Str2: PWideChar): Integer; deprecated;
+{$IFDEF MSWINDOWS}function Tnt_WStrComp(Str1, Str2: PWideChar): Integer; deprecated;{$ENDIF}
 function Tnt_WStrPos(Str, SubStr: PWideChar): PWideChar; deprecated;
 
 { ------------ introduced --------------- }
 function WStrECopy(Dest, Source: PWideChar): PWideChar;
+{$IFDEF MSWINDOWS}
 function WStrLComp(Str1, Str2: PWideChar; MaxLen: Cardinal): Integer;
 function WStrLIComp(Str1, Str2: PWideChar; MaxLen: Cardinal): Integer;
 function WStrIComp(Str1, Str2: PWideChar): Integer;
 function WStrLower(Str: PWideChar): PWideChar;
 function WStrUpper(Str: PWideChar): PWideChar;
+{$ENDIF}
 function WStrRScan(const Str: PWideChar; Chr: WideChar): PWideChar;
 function WStrLCat(Dest: PWideChar; const Source: PWideChar; MaxLen: Cardinal): PWideChar;
 function WStrPas(const Str: PWideChar): WideString;
@@ -78,7 +80,8 @@ function WideDequotedStr(const S: WideString; AQuote: WideChar): WideString;
 implementation
 
 uses
-  {$IFDEF COMPILER_9_UP} WideStrUtils, {$ENDIF} Math, Windows, TntWindows;
+  {$IFDEF COMPILER_9_UP} WideStrUtils, {$ENDIF} Math
+  {$IFDEF MSWINDOWS}, Windows, TntWindows{$ENDIF};
 
 {$IFNDEF COMPILER_9_UP}
 function WStrAlloc(Size: Cardinal): PWideChar;
@@ -206,10 +209,12 @@ begin
   end;
 end;
 
+{$IFDEF MSWINDOWS}
 function WStrComp(Str1, Str2: PWideChar): Integer;
 begin
   Result := WStrLComp(Str1, Str2, MaxInt);
 end;
+{$ENDIF}
 
 function WStrPos(Str, SubStr: PWideChar): PWideChar;
 var
@@ -244,10 +249,12 @@ begin
 end;
 {$ENDIF}
 
+{$IFDEF MSWINDOWS}
 function Tnt_WStrComp(Str1, Str2: PWideChar): Integer; deprecated;
 begin
   Result := WStrComp(Str1, Str2);
 end;
+{$ENDIF}
 
 function Tnt_WStrPos(Str, SubStr: PWideChar): PWideChar; deprecated;
 begin
@@ -261,6 +268,7 @@ begin
   Result := WStrEnd(WStrCopy(Dest, Source));
 end;
 
+{$IFDEF MSWINDOWS}
 function WStrComp_EX(Str1, Str2: PWideChar; MaxLen: Cardinal; dwCmpFlags: Cardinal): Integer;
 var
   Len1, Len2: Integer;
@@ -301,6 +309,7 @@ begin
   Result := Str;
   Tnt_CharUpperBuffW(Str, WStrLen(Str))
 end;
+{$ENDIF}
 
 function WStrRScan(const Str: PWideChar; Chr: WideChar): PWideChar;
 var
