@@ -50,6 +50,8 @@
 // DELPHI_7    : Delphi v7.x is being used.
 // DELPHI_7_UP : Delphi v7.x or higher is being used.
 //
+// DelphiPersonalEdition : Delphi Personal Edition is being used.
+//
 // Only defined if Linux is the target:
 // KYLIX       : Any version of Kylix is being used.
 // KYLIX_1     : Kylix 1.x is being used.
@@ -62,6 +64,8 @@
 // Only defined if Linux is the target:
 // QT_CLX      : Trolltech's QT library is being used.
 //----------------------------------------------------------------------------------------------------------------------
+
+{$INCLUDE DelphiPersonalEdition.inc}
 
 {$ifdef Win32}
 

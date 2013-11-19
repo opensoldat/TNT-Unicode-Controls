@@ -23,8 +23,8 @@ procedure Register;
 implementation
 
 uses
-  Classes, DB, TntForms, TntMenus, TntStdCtrls, TntCheckLst, TntGrids, TntExtCtrls, TntComCtrls,
-  TntButtons, TntDB, TntDBCtrls, TntDBGrids, TntActnList, TntDialogs, TntExtDlgs, DesignIntf;
+  Classes, TntForms, TntMenus, TntStdCtrls, TntCheckLst, TntGrids, TntExtCtrls, TntComCtrls,
+  TntButtons, {$IFNDEF DelphiPersonalEdition} DB, TntDB, TntDBCtrls, TntDBGrids,{$ENDIF} TntActnList, TntDialogs, TntExtDlgs, DesignIntf;
 
 const
   TNT_STANDARD      = 'Tnt Standard';
@@ -97,6 +97,7 @@ begin
   { -- TTntOleContainer goes here -- }
 
   // ------- Data Controls -------
+  {$IFNDEF DelphiPersonalEdition}
   RegisterComponents(TNT_DATA_CONTROLS, [TTntDBGrid]);
   { -- TTntDBNavigator goes here -- }
   RegisterComponents(TNT_DATA_CONTROLS, [TTntDBText]);
@@ -113,6 +114,7 @@ begin
   { -- TTntDBCtrlGrid here -- }
   { -- TTntDBLookupListBox goes here -- }
   { -- TTntDBChart goes here -- }
+  {$ENDIF}
 
   // ------- Dialogs -------
   RegisterComponents(TNT_DIALOGS, [TTntOpenDialog]);
@@ -121,7 +123,7 @@ begin
   RegisterComponents(TNT_DIALOGS, [TTntSavePictureDialog]);
 
   // --------- Fields --------------
-  RegisterTntFields;
+  {$IFNDEF DelphiPersonalEdition}RegisterTntFields;{$ENDIF}
 
   // --------- Classes --------------
   RegisterClass(TTntMenuItem);
