@@ -1,0 +1,13 @@
+# set default behavior
+* text=auto
+
+# normalize and convert to native line endings on checkout
+*.inc text
+*.pas text
+*.pp  text
+*.rc  text
+*.txt text
+
+# checkout with CRLF line endings
+*.dof text eol=crlf
+*.dfm text eol=crlf
